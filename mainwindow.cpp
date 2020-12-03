@@ -36,21 +36,20 @@ MainWindow::~MainWindow()
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     if ( event->type() == QEvent::Enter) {
-        timerId = startTimer(25);
+        timerId = startTimer(25); //singleShot вместо таймера можно
     }
 }
 
 
 void MainWindow::timerEvent(QTimerEvent *event)
 {
+    killTimer(timerId);
     int step = 30;
     int newX = rand()% ( rect().width() - noBtn->width() );
     int newY = rand()% ( rect().height() - noBtn->height() );
-    for(int i = 0; i < 30; i++) {
+    for(int i = 0; i < step; i++) {
         noBtn->move( noBtn->x() + (newX - noBtn->x())/step,
                      noBtn->y() + (newY - noBtn->y())/step);
         repaint();
     }
-    killTimer(timerId);
-
 }
